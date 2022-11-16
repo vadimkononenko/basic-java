@@ -1,15 +1,11 @@
 package lab4;
 
-import java.util.Comparator;
-
 public class Cosmetics {
     private String name;
     private String brand;
     private String use;
     private String sex;
     private int price;
-
-//    public static Comparator<Cosmetics> Cosmetics
 
     public Cosmetics() {
     }
