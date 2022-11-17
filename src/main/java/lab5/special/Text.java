@@ -12,8 +12,15 @@ public class Text {
 
     @Override
     public String toString() {
-        return Arrays.stream(sentences)
-                .map(String::valueOf)
-                .collect(Collectors.joining());
+        StringBuilder text = new StringBuilder();
+
+        for (int i = 0; i < sentences.length; i++) {
+            text.append(sentences[i]);
+            if (i != sentences.length - 1) {
+                text.append(" ");
+            }
+        }
+
+        return text.toString();
     }
 }

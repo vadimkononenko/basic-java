@@ -24,13 +24,18 @@ public class Lab3 {
         if (text == null)
             throw new IllegalStateException("String must be not null");
 
-        String[] sentences = text.split("\\.");
+        String[] sentences = text.split("[.!?]");
         List<String> firstSentencesWords = new ArrayList<>();
         List<String> otherWords = new ArrayList<>();
-        List<String> uniqueWords = new ArrayList<>();
 
         for (int i = 0; i < sentences.length; i++) {
-            sentences[i] = sentences[i].trim().toLowerCase();
+            sentences[i] = sentences[i]
+                    .trim()
+                    .replaceAll(" +", " ")
+                    .replaceAll("[\\-:;]", " ")
+                    .replaceAll("!", "")
+                    .replaceAll(",", " ")
+                    .toLowerCase();
             if (i == 0) {
                 firstSentencesWords.addAll(List.of(sentences[i].split(" ")));
             } else {
@@ -38,18 +43,16 @@ public class Lab3 {
             }
         }
 
+        firstSentencesWords = firstSentencesWords.stream().distinct().collect(Collectors.toList());
         otherWords = otherWords.stream().distinct().collect(Collectors.toList());
 
-        for (String firstSentencesWord : firstSentencesWords) {
-            int count = 0;
-            for (String s : otherWords) {
-                if (!s.equals(firstSentencesWord)) {
-                    count++;
-                }
-            }
-            if (count == otherWords.size()) uniqueWords.add(firstSentencesWord);
+        for (String word: otherWords) {
+            firstSentencesWords.remove(word);
         }
 
-        uniqueWords.stream().distinct().forEach(System.out::println);
+        System.out.println("\n------- Unique words -------");
+        System.out.println(firstSentencesWords.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", ")));
     }
 }
